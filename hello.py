@@ -12,6 +12,7 @@ import requests
 import redis
 import uuid
 from pydub import AudioSegment
+import tempfile
 
 
 #Alexa
