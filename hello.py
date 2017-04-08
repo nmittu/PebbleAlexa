@@ -109,12 +109,14 @@ def home(strToConv):
 	with open(file_name, 'wb') as audio_file:
 		audio_file.write(audio)
 
-	"""_input = AudioSegment.from_wav(file_name)
+	_input = AudioSegment.from_mp3(file_name)
 	tf = tempfile.NamedTemporaryFile(suffix=".wav")
 	output = _input.set_channels(1).set_frame_rate(16000)
-	f = output.export(tf.name, format="wav")"""
-	with open(file_name, 'rb') as audio_file:
-		return json.dumps(speech_to_text.recognize(audio_file, content_type="audio/wav", timestamps=True, word_confidence=True))
+	f = output.export(tf.name, format="wav")
+
+	temp = json.dumps(speech_to_text.recognize(tf, content_type="audio/L16; rate=16000; channels=1", timestamps=True, word_confidence=True))
+	tf.close()
+	return temp
 
 
 
