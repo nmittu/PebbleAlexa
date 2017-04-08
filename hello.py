@@ -14,6 +14,7 @@ import uuid
 from pydub import AudioSegment
 import tempfile
 import re
+import urllib
 
 
 #Alexa
@@ -148,7 +149,7 @@ def code():
 	print(red.set(uid+"-access_token", resp['access_token']))
 	#red.expire(uid+"-access_token", 3600)
 	red.set(uid+"-refresh_token", resp['refresh_token'])
-	return "<head><script>function load(){document.location = \"pebblejs://close#" + encodeURIComponent(uid) + "\";}</script></head><body onload=\"load();\"></body>"
+	return "<head><script>function load(){document.location = \"pebblejs://close#" + urllib.quote(uid, safe='~()*!.\'') + "\";}</script></head><body onload=\"load();\"></body>"
 
 # /* Endpoint to greet and add a new visitor to database.
 # * Send a POST request to localhost:8080/api/visitors with body
