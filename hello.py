@@ -11,6 +11,7 @@ from requests import Request
 import requests
 import redis
 import uuid
+from pydub import AudioSegment
 
 
 #Alexa
@@ -48,7 +49,60 @@ def home(strToConv):
     with open(file_name, 'wb') as audio_file:
         audio_file.write(text_to_speech.synthesize(strToConv, accept="audio/wav", voice="en-US_AllisonVoice"))
 
-    return strToConv + " written to " + file_name
+	_input = AudioSegment.from_wav(file_name)
+	tf = tempfile.NamedTemporaryFile(suffix=".wav")
+	output = _input.set_channels(1).set_frame_rate(16000)
+	f = output.export(tf.name, format="wav")
+
+	red = redis.from_url(redis_url)
+
+	uid = response.args.get("uid")
+	token = red.get(uid+"-access_token")
+
+	url = 'https://access-alexa-na.amazon.com/v1/avs/speechrecognizer/recognize'
+	headers = {'Authorization' : 'Bearer %s' % token}
+	d = {
+		"messageHeader": {
+			"deviceContext": [
+				{
+					"name": "playbackState",
+					"namespace": "AudioPlayer",
+					"payload": {
+						"streamId": "",
+						"offsetInMilliseconds": "0",
+						"playerActivity": "IDLE"
+					}
+				}
+			]
+		},
+		"messageBody": {
+			"profile": "alexa-close-talk",
+			"locale": "en-us",
+			"format": "audio/L16; rate=16000; channels=1"
+		}
+	}
+	files = [
+		('file', ('request', json.dumps(d), 'application/json; charset=UTF-8')),
+		('file', ('audio', tf, 'audio/L16; rate=16000; channels=1'))
+	]
+	r = requests.post(url, headers=headers, files=files)
+	tf.close()
+	for v in r.headers['content-type'].split(";"):
+		if re.match('.*boundary.*', v):
+			boundary =  v.split("=")[1]
+
+	data = r.content.split(boundary)
+	for d in data:
+		if (len(d) >= 1024):
+	 	   audio = d.split('\r\n\r\n')[1].rstrip('--')
+
+	random_str = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(20))
+    file_name = "/tmp/{}.wav".format(random_str)
+
+    with open(file_name, 'wb') as audio_file:
+        audio_file.write(audio)
+
+    return strToConv + " result written to " + file_name
 
 
 
