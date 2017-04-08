@@ -148,7 +148,7 @@ def code():
 	print(red.set(uid+"-access_token", resp['access_token']))
 	#red.expire(uid+"-access_token", 3600)
 	red.set(uid+"-refresh_token", resp['refresh_token'])
-	return redirect("pebblejs://close#" + uid)
+	return "<script>document.location = \"pebblejs://close#" + uid + "\"</script>"
 
 # /* Endpoint to greet and add a new visitor to database.
 # * Send a POST request to localhost:8080/api/visitors with body
