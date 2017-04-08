@@ -110,7 +110,7 @@ def home(strToConv):
 		audio_file.write(audio)
 
 	with open(file_name, 'rb') as audio_file:
-		return json.dumps(speech_to_text.recognize(audio_file, content_type="audio/mpeg", timestamps=True, word_confidence=True))
+		return json.dumps(speech_to_text.recognize(audio_file, content_type="audio/L16", timestamps=True, word_confidence=True))
 
 
 
