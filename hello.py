@@ -47,7 +47,7 @@ def home(strToConv):
     file_name = "/tmp/{}.wav".format(random_str)
 
     with open(file_name, 'wb') as audio_file:
-        audio_file.write(text_to_speech.synthesize(strToConv, accept="audio/wav", voice="en-US_AllisonVoice"))
+		audio_file.write(text_to_speech.synthesize(strToConv, accept="audio/wav", voice="en-US_AllisonVoice"))
 
 	_input = AudioSegment.from_wav(file_name)
 	tf = tempfile.NamedTemporaryFile(suffix=".wav")
