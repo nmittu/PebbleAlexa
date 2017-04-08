@@ -37,7 +37,7 @@ db = None
 
 # On Bluemix, get the port number from the environment variable PORT
 # When running this app on the local machine, default the port to 8080
-port = int(os.getenv('PORT', 8080))
+port = int(os.getenv('PORT', 443))
 
 @app.route('/text/<strToConv>')
 def home(strToConv):
