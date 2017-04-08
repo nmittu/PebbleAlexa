@@ -97,12 +97,12 @@ def home(strToConv):
 			audio = d.split('\r\n\r\n')[1].rstrip('--')
 
 	random_str = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(20))
-    file_name = "/tmp/{}.wav".format(random_str)
+	file_name = "/tmp/{}.wav".format(random_str)
 
-    with open(file_name, 'wb') as audio_file:
-        audio_file.write(audio)
+	with open(file_name, 'wb') as audio_file:
+		audio_file.write(audio)
 
-    return strToConv + " result written to " + file_name
+	return strToConv + " result written to " + file_name
 
 
 
