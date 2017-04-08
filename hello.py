@@ -57,7 +57,7 @@ def home(strToConv):
 
 	red = redis.from_url(redis_url)
 
-	uid = response.args.get("uid")
+	uid = request.args.get("uid")
 	token = red.get(uid+"-access_token")
 
 	url = 'https://access-alexa-na.amazon.com/v1/avs/speechrecognizer/recognize'
