@@ -108,7 +108,7 @@ def home(strToConv):
 	output = _input.set_channels(1).set_frame_rate(16000)
 	f = output.export(tf.name, format="wav")
 
-	temp = speech_to_text.recognize(tf, content_type="audio/L16; rate=16000; channels=1", timestamps=False, word_confidence=False)["results"][0]["alternatives"][0]["transcript"]
+	temp = json.dumps(speech_to_text.recognize(tf, content_type="audio/L16; rate=16000; channels=1", timestamps=False, word_confidence=False))#["results"][0]["alternatives"][0]["transcript"]
 	tf.close()
 	return temp
 
@@ -148,7 +148,7 @@ def code():
 	print(red.set(uid+"-access_token", resp['access_token']))
 	#red.expire(uid+"-access_token", 3600)
 	red.set(uid+"-refresh_token", resp['refresh_token'])
-	return redirect("pebblejs://close#" + uid)
+	return redirect(  )
 
 # /* Endpoint to greet and add a new visitor to database.
 # * Send a POST request to localhost:8080/api/visitors with body
