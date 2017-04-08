@@ -94,7 +94,7 @@ def home(strToConv):
 		if re.match('.*boundary.*', v):
 			boundary =  v.split("=")[1]
 
-	data = r.content.split(boundary)
+	data = r.content.split(bytes(boundary, encoding='utf-8'))
 	for d in data:
 		if (len(d) >= 1024):
 			audio = d.split('\r\n\r\n')[1].rstrip('--')
