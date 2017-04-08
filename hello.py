@@ -9,6 +9,7 @@ import string
 from watson_developer_cloud import TextToSpeechV1
 from requests import Request
 import requests
+import redis
 
 
 #Alexa
@@ -20,7 +21,6 @@ Product_ID = "PebbleAlexa"
 
 #Redis
 redis_url = "127.0.0.1:6379"
-
 
 text_to_speech = TextToSpeechV1(
     username='56ab11cb-ed91-4f77-acdc-f39d5c4b9e47',
@@ -69,6 +69,23 @@ def auth():
 	req = Request('GET', url, params=payload)
 	p = req.prepare()
 	return redirect(p.url)
+
+
+@app.route('/code')
+def code():
+	code=request.args.get("code")
+	path = path = request.url_root
+	callback = path+"code"
+	payload = {"client_id" : Client_ID, "client_secret" : Client_Secret, "code" : code, "grant_type" : "authorization_code", "redirect_uri" : callback }
+	url = "https://api.amazon.com/auth/o2/token"
+	r = requests.post(url, data = payload)
+	uid = str(uuid.uuid4())
+	red = redis.from_url(redis_url)
+	resp = json.loads(r.text)
+	red.set(uid+"-access_token", resp['access_token'])
+	red.expire(uid+"-access_token", 3600)
+	red.set(uid+"-refresh_token", resp['refresh_token'])
+	return uid
 
 # /* Endpoint to greet and add a new visitor to database.
 # * Send a POST request to localhost:8080/api/visitors with body
