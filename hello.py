@@ -138,7 +138,7 @@ def code():
 	uid = str(uuid.uuid4())
 	red = redis.from_url(redis_url)
 	resp = json.loads(r.text)
-	red.set(uid+"-access_token", resp['access_token'])
+	print(red.set(uid+"-access_token", resp['access_token']))
 	#red.expire(uid+"-access_token", 3600)
 	red.set(uid+"-refresh_token", resp['refresh_token'])
 	return uid + red.get(uid)
