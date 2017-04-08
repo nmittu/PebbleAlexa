@@ -59,6 +59,7 @@ def home(strToConv):
 
 	uid = request.args.get("uid")
 	token = str(red.get(uid+"-access_token"))
+	return uid+"-access_token"
 
 	url = 'https://access-alexa-na.amazon.com/v1/avs/speechrecognizer/recognize'
 	headers = {'Authorization' : 'Bearer %s' % token}
