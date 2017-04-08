@@ -30,6 +30,10 @@ text_to_speech = TextToSpeechV1(
     username='56ab11cb-ed91-4f77-acdc-f39d5c4b9e47',
     password='FURRaBf5FPaN')
 
+speech_to_text = SpeechToTextV1(
+	username='cf1e2311-a8e0-4792-9e58-a16dd9cdd6b9',
+	password='zPYxyQMm5CFJ')
+
 # Emit Bluemix deployment event
 cf_deployment_tracker.track()
 
@@ -105,7 +109,8 @@ def home(strToConv):
 	with open(file_name, 'wb') as audio_file:
 		audio_file.write(audio)
 
-	return strToConv + " result written to " + file_name
+	with open(file_name, 'rb') as audio_file:
+		return json.dumps(speech_to_text.recognize(audio_file, content_type="audio/wav", timestamps=True, word_confidence=True, indent=2))
 
 
 
