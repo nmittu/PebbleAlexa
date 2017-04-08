@@ -58,7 +58,7 @@ def home(strToConv):
 	red = redis.from_url(redis_url)
 
 	uid = request.args.get("uid")
-	token = red.get(uid+"-access_token")
+	token = str(red.get(uid+"-access_token"))
 
 	url = 'https://access-alexa-na.amazon.com/v1/avs/speechrecognizer/recognize'
 	headers = {'Authorization' : 'Bearer %s' % token}
@@ -141,7 +141,7 @@ def code():
 	print(red.set(uid+"-access_token", resp['access_token']))
 	#red.expire(uid+"-access_token", 3600)
 	red.set(uid+"-refresh_token", resp['refresh_token'])
-	return uid + str(red.get(uid+"-access_token"))
+	return uid
 
 # /* Endpoint to greet and add a new visitor to database.
 # * Send a POST request to localhost:8080/api/visitors with body
