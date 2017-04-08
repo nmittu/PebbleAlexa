@@ -57,7 +57,7 @@ def home(strToConv):
 
 	red = redis.from_url(redis_url)
 
-	uid = request.args.get("uid")
+	uid = request.args.post("uid")
 	return uid+"-access_token"
 	token = str(red.get(uid+"-access_token"))
 
