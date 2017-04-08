@@ -59,7 +59,7 @@ def home(strToConv):
 	red = redis.from_url(redis_url)
 
 	uid = request.form.get("uid")
-	token = red.get(uid+"-access_token")
+	token = red.get(uid+"-access_token").decode('ascii')
 
 	url = 'https://access-alexa-na.amazon.com/v1/avs/speechrecognizer/recognize'
 	headers = {'Authorization' : 'Bearer %s' % token}
@@ -90,7 +90,7 @@ def home(strToConv):
 	r = requests.post(url, headers=headers, files=files)
 	tf.close()
 
-	return 'Bearer %s' % str(token)
+	return 'Bearer %s' % token
 
 	for v in r.headers['content-type'].split(";"):
 		if re.match('.*boundary.*', v):
