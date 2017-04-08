@@ -52,13 +52,8 @@ def home(strToConv):
 	random_str = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(20))
 	file_name = "/tmp/{}.wav".format(random_str)
 
-	with open(file_name, 'wb') as audio_file:
-		audio_file.write(text_to_speech.synthesize(strToConv, accept="audio/wav", voice="en-US_AllisonVoice"))
 
-	_input = AudioSegment.from_wav(file_name)
-	tf = tempfile.NamedTemporaryFile(suffix=".wav")
-	output = _input.set_channels(1).set_frame_rate(16000)
-	f = output.export(tf.name, format="wav")
+	audio_file = text_to_speech.synthesize(strToConv, accept="audio/L16; rate=16000; channels=1", voice="en-US_AllisonVoice")
 
 	red = redis.from_url(redis_url)
 
@@ -89,7 +84,7 @@ def home(strToConv):
 	}
 	files = [
 		('file', ('request', json.dumps(d), 'application/json; charset=UTF-8')),
-		('file', ('audio', tf, 'audio/L16; rate=16000; channels=1'))
+		('file', ('audio', audio_file, 'audio/L16; rate=16000; channels=1'))
 	]
 	r = requests.post(url, headers=headers, files=files)
 	tf.close()
