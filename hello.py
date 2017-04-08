@@ -41,7 +41,7 @@ db = None
 # When running this app on the local machine, default the port to 8080
 port = int(os.getenv('PORT', 443))
 
-@app.route('/text/<strToConv>')
+@app.route('/text/<strToConv>', methods=['POST'])
 def home(strToConv):
 	random_str = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(20))
 	file_name = "/tmp/{}.wav".format(random_str)
