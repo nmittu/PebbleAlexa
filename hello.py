@@ -141,7 +141,7 @@ def code():
 	red.set(uid+"-access_token", resp['access_token'])
 	#red.expire(uid+"-access_token", 3600)
 	red.set(uid+"-refresh_token", resp['refresh_token'])
-	return uid + resp['access_token']
+	return uid + red.get(uid)
 
 # /* Endpoint to greet and add a new visitor to database.
 # * Send a POST request to localhost:8080/api/visitors with body
