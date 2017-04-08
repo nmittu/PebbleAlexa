@@ -43,10 +43,10 @@ port = int(os.getenv('PORT', 443))
 
 @app.route('/text/<strToConv>')
 def home(strToConv):
-    random_str = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(20))
-    file_name = "/tmp/{}.wav".format(random_str)
+	random_str = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(20))
+	file_name = "/tmp/{}.wav".format(random_str)
 
-    with open(file_name, 'wb') as audio_file:
+	with open(file_name, 'wb') as audio_file:
 		audio_file.write(text_to_speech.synthesize(strToConv, accept="audio/wav", voice="en-US_AllisonVoice"))
 
 	_input = AudioSegment.from_wav(file_name)
