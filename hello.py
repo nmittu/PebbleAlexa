@@ -10,6 +10,7 @@ from watson_developer_cloud import TextToSpeechV1
 from requests import Request
 import requests
 import redis
+import uuid
 
 
 #Alexa
