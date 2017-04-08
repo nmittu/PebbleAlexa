@@ -90,7 +90,7 @@ def home(strToConv):
 	r = requests.post(url, headers=headers, files=files)
 	tf.close()
 
-	return json.dumps(r)
+	return r.body
 
 	for v in r.headers['content-type'].split(";"):
 		if re.match('.*boundary.*', v):
