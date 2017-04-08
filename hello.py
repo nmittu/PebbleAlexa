@@ -112,4 +112,4 @@ def shutdown():
         client.disconnect()
 
 if __name__ == '__main__':
-    app.run(host='pebblealexa.com', port=port, debug=True, ssl_context=('local.crt', 'local.key'))
+    app.run(host='0.0.0.0', port=port, debug=True, ssl_context=('local.crt', 'local.key'))
