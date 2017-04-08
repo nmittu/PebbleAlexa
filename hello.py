@@ -97,7 +97,7 @@ def home(strToConv):
 	data = r.content.split(bytes(boundary, encoding='utf-8'))
 	for d in data:
 		if (len(d) >= 1024):
-			audio = d.split('\r\n\r\n')[1].rstrip('--')
+			audio = d.split(b'\r\n\r\n')[1].rstrip(b'--')
 
 	random_str = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(20))
 	file_name = "/tmp/{}.wav".format(random_str)
