@@ -87,7 +87,6 @@ def home(strToConv):
 		('file', ('audio', audio_file, 'audio/L16; rate=16000; channels=1'))
 	]
 	r = requests.post(url, headers=headers, files=files)
-	tf.close()
 
 	for v in r.headers['content-type'].split(";"):
 		if re.match('.*boundary.*', v):
