@@ -108,8 +108,14 @@ def home(strToConv):
 	output = _input.set_channels(1).set_frame_rate(16000)
 	f = output.export(tf.name, format="wav")
 
-	temp = json.dumps(speech_to_text.recognize(tf, content_type="audio/L16; rate=16000; channels=1", timestamps=False, word_confidence=False, continuous=True))#["results"][0]["alternatives"][0]["transcript"]
+	results = (speech_to_text.recognize(tf, content_type="audio/L16; rate=16000; channels=1", timestamps=False, word_confidence=False, continuous=True))["results"]
 	tf.close()
+
+	temp = ""
+	for result in results:
+		temp += result["alternatives"][0]["transcript"].capitilize() + ". "
+
+	#temp = json.dumps(speech_to_text.recognize(tf, content_type="audio/L16; rate=16000; channels=1", timestamps=False, word_confidence=False, continuous=True))#["results"][0]["alternatives"][0]["transcript"]
 	return temp
 
 
