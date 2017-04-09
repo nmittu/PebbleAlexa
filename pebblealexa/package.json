@@ -1,0 +1,31 @@
+{
+    "author": "MittuDev",
+    "dependencies": {},
+    "keywords": [],
+    "name": "pebblealexa",
+    "pebble": {
+        "capabilities": [
+            "configurable"
+        ],
+        "displayName": "PebbleAlexa",
+        "enableMultiJS": true,
+        "messageKeys": {
+            "STRING": 1
+        },
+        "projectType": "native",
+        "resources": {
+            "media": []
+        },
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "aplite",
+            "basalt",
+            "chalk"
+        ],
+        "uuid": "7c106130-8fc8-4625-85a6-c3ea41da6a58",
+        "watchapp": {
+            "watchface": false
+        }
+    },
+    "version": "1.0.0"
+}
