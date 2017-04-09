@@ -32,8 +32,7 @@ text_to_speech = TextToSpeechV1(
 
 speech_to_text = SpeechToTextV1(
 	username='cf1e2311-a8e0-4792-9e58-a16dd9cdd6b9',
-	password='zPYxyQMm5CFJ',
-	continuous=True)
+	password='zPYxyQMm5CFJ')
 
 # Emit Bluemix deployment event
 cf_deployment_tracker.track()
@@ -109,7 +108,7 @@ def home(strToConv):
 	output = _input.set_channels(1).set_frame_rate(16000)
 	f = output.export(tf.name, format="wav")
 
-	temp = speech_to_text.recognize(tf, content_type="audio/L16; rate=16000; channels=1", timestamps=False, word_confidence=False)["results"][0]["alternatives"][0]["transcript"]
+	temp = speech_to_text.recognize(tf, content_type="audio/L16; rate=16000; channels=1", timestamps=False, word_confidence=False, continuous=True)["results"][0]["alternatives"][0]["transcript"]
 	tf.close()
 	return temp
 
