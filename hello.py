@@ -32,7 +32,8 @@ text_to_speech = TextToSpeechV1(
 
 speech_to_text = SpeechToTextV1(
 	username='cf1e2311-a8e0-4792-9e58-a16dd9cdd6b9',
-	password='zPYxyQMm5CFJ')
+	password='zPYxyQMm5CFJ',
+	continuous=True)
 
 # Emit Bluemix deployment event
 cf_deployment_tracker.track()
