@@ -50,7 +50,7 @@ port = int(os.getenv('PORT', 443))
 
 def gettoken(uid):
 	red = redis.from_url(redis_url)
-	token = redis.get(uid+"-access_token")
+	token = red.get(uid+"-access_token")
 	refresh = red.get(uid+"-refresh_token")
 	if token:
 		return token
