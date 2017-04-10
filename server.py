@@ -47,6 +47,25 @@ db = None
 # When running this app on the local machine, default the port to 8080
 port = int(os.getenv('PORT', 443))
 
+
+def gettoken(uid):
+	red = redis.from_url(redis_url)
+	token = redis.get(uid+"-access_token")
+	refresh = red.get(uid+"-refresh_token")
+	if token:
+		return token
+	elif refresh:
+		payload = {"client_id" : Client_ID, "client_secret" : Client_Secret, "refresh_token" : refresh, "grant_type" : "refresh_token", }
+		url = "https://api.amazon.com/auth/o2/token"
+		r = requests.post(url, data = payload)
+		resp = json.loads(r.text)
+		red.set(uid+"-access_token", resp['access_token'])
+		red.expire(uid+"-access_token", 3600)
+		return resp['access_token']
+	else:
+		return False
+
+
 @app.route('/text/<strToConv>', methods=['POST'])
 def home(strToConv):
 	random_str = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(20))
@@ -55,10 +74,8 @@ def home(strToConv):
 
 	audio_file = text_to_speech.synthesize(strToConv, accept="audio/L16; rate=16000; channels=1", voice="en-US_AllisonVoice")
 
-	red = redis.from_url(redis_url)
-
 	uid = request.form.get("uid")
-	token = red.get(uid+"-access_token").decode('ascii')
+	token = gettoken(uid).decode('ascii')
 
 	url = 'https://access-alexa-na.amazon.com/v1/avs/speechrecognizer/recognize'
 	headers = {'Authorization' : 'Bearer %s' % token}
@@ -152,7 +169,7 @@ def code():
 	red = redis.from_url(redis_url)
 	resp = json.loads(r.text)
 	print(red.set(uid+"-access_token", resp['access_token']))
-	#red.expire(uid+"-access_token", 3600)
+	red.expire(uid+"-access_token", 3600)
 	red.set(uid+"-refresh_token", resp['refresh_token'])
 	return redirect("pebblejs://close#" + uid)
 
