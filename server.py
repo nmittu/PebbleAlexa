@@ -18,21 +18,21 @@ import re
 
 #Alexa
 Security_Profile_Description ="PebbleAlexa"
-Security_Profile_ID  = "amzn1.application.f82a211a43d34cb28773d844a3805ef4"
-Client_ID = "amzn1.application-oa2-client.cee1c60d120347518b0c7db9b2cbb09a"
-Client_Secret = "7bc082f3ab3ad004cf85f5500529935ce8f8ac61ae7c14f3ee7d8f3e31a7c74c"
+Security_Profile_ID  = "Security_Profile_ID"
+Client_ID = "Client_ID"
+Client_Secret = "Client_Secret"
 Product_ID = "PebbleAlexa"
 
 #Redis
 redis_url = "127.0.0.1:6379"
 
 text_to_speech = TextToSpeechV1(
-    username='56ab11cb-ed91-4f77-acdc-f39d5c4b9e47',
-    password='FURRaBf5FPaN')
+    username='username',
+    password='password')
 
 speech_to_text = SpeechToTextV1(
-	username='cf1e2311-a8e0-4792-9e58-a16dd9cdd6b9',
-	password='zPYxyQMm5CFJ')
+	username='username',
+	password='password')
 
 # Emit Bluemix deployment event
 cf_deployment_tracker.track()
